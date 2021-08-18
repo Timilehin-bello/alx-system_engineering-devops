@@ -1,0 +1,1 @@
+This repository contians the answer to some use cases of linux command.
