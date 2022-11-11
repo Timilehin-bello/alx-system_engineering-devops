@@ -1,5 +1,14 @@
-# changing max open file limit
-exec { 'change-max-open-files':
-  command => 'sudo sed -i "s/15/5000/" /etc/default/nginx; service nginx restart',
-  path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+#fix stack so as to get 0 failed requests
+
+service { 'nginx stop':
+  ensure => stopped;
+}
+
+exec { 'fix nginx':
+  command => "sed -i 's/15/2000/g' /etc/default/nginx",
+  path    => ['/bin'],
+}
+
+service { 'nginx':
+  ensure => running,
 }
